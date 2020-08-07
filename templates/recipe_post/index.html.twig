@@ -1,0 +1,116 @@
+{% extends ('recipe_post/show.html.twig') %}
+
+{% block title %}Welcome to the main app main view!{% endblock %}
+
+{% block body %}
+
+<style>
+    .wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 14px/1.5 sans-serif; }
+    .wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+
+
+
+    <h1 class="display-4 text-center"> Welcome to the CreateARecipe App!</h1>
+<div class="wrapper">
+
+    {% for message in app.flashes('recipesuccess') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <div class="text-center">See all the available recipes</div>
+                    </button>
+                </h2>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+
+
+
+                    <table class="table">
+                        <thead>
+                        <tr class="text-center">
+                            <th scope="col">Recipe Name</th>
+                            <th scope="col">Preparation Time</th>
+                            <th scope="col">Servings</th>
+                            <th scope="col">Total price</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for recipe_post in recipeposts %}
+                            <tr class="text-center">
+
+                                <td><a href="{{ path('recipepost.show',{id: recipe_post.id}) }}" class="text-warning">{{ recipe_post.title }}</a></td>
+                                <td class="pt-1">{{ recipe_post.preparationtime }}</td>
+                                <td class="pt-1">{{ recipe_post.servings }}</td>
+                                <td class="pt-1">{{ recipe_post.recipeprice }}</td>
+
+
+                                <td class="pt-1"> <a href="{{ path('recipepost.remove',{id: recipe_post.id}) }}" class="text-danger"> <i class="fas fa-trash"></i></a></td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <div class="text-center">Add a new recipe</div>
+
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+
+
+
+                    <div class="wrapper">
+                        <h4 class="display-4">Add a new recipe: </h4>
+                        {{ form(recipeform) }}
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+</div>
+
+
+
+
+
+
+{% endblock %}
